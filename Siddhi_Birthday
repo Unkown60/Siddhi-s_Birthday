@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday — A Special Gift For You</title>
+<meta name="description" content="A cute birthday surprise filled with love for Siddhi">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Quicksand:wght@400;500;600;700&family=Pacifico&family=Sacramento&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --pink: #ff6b9d;
+    --rose: #ff4081;
+    --blush: #ffd6e7;
+    --lavender: #d4a8ff;
+    --cream: #fff8f0;
+    --deep: #3d1a4e;
+    --soft-purple: #8b5cf6;
+    --gold: #f4c430;
+  }
+
+  html, body { height: 100%; overflow: hidden; }
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background: var(--cream);
+    color: var(--deep);
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='%23ff6b9d'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E") 10 10, auto;
+  }
+
+  /* ===== CUTE IMAGE CLASSES ===== */
+  .cute-img { width: 140px; height: 140px; object-fit: contain; }
+  .cute-img-sm { width: 48px; height: 48px; object-fit: contain; }
+  .cute-img-md { width: 70px; height: 70px; object-fit: contain; }
+  .cute-img-lg { width: 180px; height: 180px; object-fit: contain; }
+  .cute-img-xl { width: 220px; height: 220px; object-fit: contain; }
+
+  /* ===== FLOATING PETALS BACKGROUND ===== */
+  .petals-bg {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 0; overflow: hidden;
+  }
+  .petal {
+    position: absolute;
+    width: 18px; height: 18px;
+    opacity: 0;
+    animation: petal-fall linear infinite;
+  }
+  .petal img { width: 100%; height: 100%; object-fit: contain; }
+  @keyframes petal-fall {
+    0% { opacity: 0; transform: translateY(-10vh) rotate(0deg) translateX(0); }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.5; }
+    100% { opacity: 0; transform: translateY(110vh) rotate(360deg) translateX(var(--drift, 50px)); }
+  }
+
+  /* ===== PAGES ===== */
+  .page {
+    position: fixed; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(0.94) translateY(24px);
+    padding: 24px;
+    overflow-y: auto;
+    z-index: 1;
+  }
+  .page.active {
+    opacity: 1; pointer-events: all;
+    transform: scale(1) translateY(0);
+  }
+  .page.exit {
+    opacity: 0;
+    transform: scale(1.06) translateY(-24px);
+  }
+
+  /* ===== PAGE 0: ENVELOPE ===== */
+  #page0 {
+    background: linear-gradient(135deg, #ffe4ec 0%, #ffd6f5 35%, #e8d5ff 65%, #d4e4ff 100%);
+  }
+  #page0::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 15% 85%, rgba(255,182,217,0.5) 0%, transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(200,168,255,0.4) 0%, transparent 45%),
+      radial-gradient(circle at 50% 50%, rgba(255,240,246,0.6) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  .envelope-scene {
+    position: relative;
+    display: flex; flex-direction: column; align-items: center;
+    z-index: 1;
+  }
+
+  /* floating cute decorations */
+  .float-decor {
+    position: absolute; pointer-events: none; z-index: 0;
+    animation: gentle-bob 5s ease-in-out infinite;
+  }
+  .float-decor img { width: 100%; height: 100%; object-fit: contain; }
+  @keyframes gentle-bob {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    33% { transform: translateY(-12px) rotate(4deg); }
+    66% { transform: translateY(6px) rotate(-3deg); }
+  }
+
+  .envelope-wrap {
+    position: relative; cursor: pointer;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+
+  .envelope { width: 300px; height: 210px; position: relative; }
+  .env-body {
+    width: 100%; height: 100%;
+    background: linear-gradient(180deg, #fdf5e6, #fef0da);
+    border-radius: 4px 4px 14px 14px;
+    box-shadow: 0 14px 45px rgba(255,105,157,0.3), 0 4px 12px rgba(0,0,0,0.06);
+    position: absolute; bottom: 0;
+  }
+  .env-flap {
+    width: 0; height: 0;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-top: 115px solid #f5e6d8;
+    position: absolute; top: 0; left: 0;
+    transform-origin: top center;
+    transition: transform 0.6s ease;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.08));
+    z-index: 2;
+  }
+  .envelope-wrap:hover .env-flap { transform: rotateX(180deg); }
+  .env-left {
+    width: 0; height: 0;
+    border-left: 150px solid #ecdcc8;
+    border-top: 105px solid transparent;
+    border-bottom: 105px solid transparent;
+    position: absolute; bottom: 0; left: 0;
+  }
+  .env-right {
+    width: 0; height: 0;
+    border-right: 150px solid #e8d8c4;
+    border-top: 105px solid transparent;
+    border-bottom: 105px solid transparent;
+    position: absolute; bottom: 0; right: 0;
+  }
+  .seal {
+    position: absolute; top: 35px; left: 50%; transform: translateX(-50%);
+    width: 85px; height: 85px; border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #f9a8d4, #ec4899);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 3;
+    box-shadow: 0 0 0 5px #fce7f3, 0 0 0 9px rgba(236,72,153,0.15), 0 6px 24px rgba(236,72,153,0.35);
+    animation: pulse-seal 2.5s ease-in-out infinite;
+    overflow: hidden;
+  }
+  .seal img { width: 52px; height: 52px; object-fit: contain; }
+  @keyframes pulse-seal {
+    0%,100%{box-shadow:0 0 0 5px #fce7f3,0 0 0 9px rgba(236,72,153,0.15),0 6px 24px rgba(236,72,153,0.35)}
+    50%{box-shadow:0 0 0 9px #fbcfe8,0 0 0 15px rgba(236,72,153,0.1),0 6px 32px rgba(236,72,153,0.45)}
+  }
+
+  .page0-title {
+    font-family: 'Sacramento', cursive;
+    font-size: 2.8rem; color: var(--deep);
+    margin-top: 32px; text-align: center;
+    position: relative; z-index: 1;
+    opacity: 0.85;
+  }
+  .click-hint {
+    font-size: 0.82rem; color: var(--rose);
+    margin-top: 14px; letter-spacing: 3px;
+    text-transform: uppercase; font-weight: 600;
+    animation: blink 1.4s ease-in-out infinite;
+    position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .click-hint img { width: 16px; height: 16px; animation: sparkle-rotate 2s linear infinite; }
+  @keyframes sparkle-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* ===== CONFETTI ===== */
+  .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 999; }
+  .confetti-piece {
+    position: absolute; top: -20px;
+    animation: fall linear forwards;
+  }
+  @keyframes fall {
+    to { top: 110vh; transform: rotate(720deg) translateX(var(--drift)); }
+  }
+
+  /* ===== PAGE 1: ACCEPT GIFT ===== */
+  #page1 {
+    background: linear-gradient(160deg, #fff0f6 0%, #fce7ff 50%, #f3e8ff 100%);
+  }
+  #page1::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 25% 75%, rgba(251,207,232,0.5) 0%, transparent 40%),
+      radial-gradient(circle at 75% 25%, rgba(221,214,254,0.4) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .page1-content {
+    display: flex; flex-direction: column; align-items: center;
+    position: relative; z-index: 1;
+  }
+  .page1-title {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(1.5rem, 4.5vw, 2.6rem);
+    color: var(--deep); text-align: center;
+    line-height: 1.35; margin-bottom: 22px;
+    text-shadow: 2px 2px 0 rgba(255,107,157,0.15);
+  }
+  .cat-gif-container {
+    animation: bounce-cat 1s ease-in-out infinite alternate;
+    filter: drop-shadow(0 10px 25px rgba(255,107,157,0.3));
+  }
+  @keyframes bounce-cat { 0%{transform:translateY(0) scale(1)} 100%{transform:translateY(-14px) scale(1.06)} }
+
+  .hearts-float-img {
+    position: absolute; pointer-events: none;
+    animation: heart-rise 3.5s ease-out infinite;
+    z-index: 0;
+  }
+  .hearts-float-img img { width: 100%; height: 100%; }
+  @keyframes heart-rise { 0%{opacity:0.7;transform:translateY(0) scale(1) rotate(0)} 100%{opacity:0;transform:translateY(-160px) scale(0.3) rotate(20deg)} }
+
+  .btn-area {
+    display: flex; gap: 24px;
+    margin-top: 32px;
+    position: relative; z-index: 2;
+    align-items: center;
+    min-height: 60px;
+  }
+
+  .btn-yes {
+    background: linear-gradient(135deg, #ff6b9d, #ff4081);
+    color: white; border: none; padding: 16px 52px;
+    border-radius: 60px; font-size: 1.3rem; font-weight: 700;
+    font-family: 'Quicksand', sans-serif;
+    cursor: pointer; letter-spacing: 1px;
+    box-shadow: 0 8px 28px rgba(255,64,129,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .btn-yes img { width: 22px; height: 22px; }
+  .btn-yes:hover { transform: scale(1.1); box-shadow: 0 14px 36px rgba(255,64,129,0.5); }
+  .btn-yes:active { transform: scale(0.96); }
+
+  .btn-no {
+    background: linear-gradient(135deg, #c4b5d0, #a898b5);
+    color: white; border: none; padding: 16px 44px;
+    border-radius: 60px; font-size: 1.2rem; font-weight: 700;
+    font-family: 'Quicksand', sans-serif;
+    cursor: pointer; letter-spacing: 1px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    transition: all 0.2s ease;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .btn-no img { width: 20px; height: 20px; }
+
+  /* ===== PAGE 2: WHY DID YOU CLICK NO ===== */
+  #page2 {
+    background: linear-gradient(160deg, #e8f0ff 0%, #dde4ff 50%, #e0e8ff 100%);
+  }
+  .page2-content {
+    display: flex; flex-direction: column; align-items: center;
+    position: relative; z-index: 1;
+  }
+  .page2-title {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(1.5rem, 5vw, 2.4rem);
+    color: #1a3a8f; text-align: center;
+    margin-bottom: 20px; line-height: 1.3;
+  }
+  .cry-cat-container {
+    animation: shake 0.5s ease-in-out infinite alternate;
+    filter: drop-shadow(0 8px 20px rgba(100,120,200,0.3));
+  }
+  @keyframes shake { 0%{transform:rotate(-5deg)} 100%{transform:rotate(5deg)} }
+  .page2-msg {
+    font-size: 1rem; color: #1a3a8f; margin-top: 18px;
+    font-weight: 600; text-align: center;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .page2-msg img { width: 26px; height: 26px; }
+  .btn-tryagain {
+    margin-top: 26px;
+    background: linear-gradient(135deg, #ff6b9d, #c084fc);
+    color: white; border: none; padding: 16px 44px;
+    border-radius: 60px; font-size: 1.2rem; font-weight: 700;
+    font-family: 'Quicksand', sans-serif; cursor: pointer;
+    box-shadow: 0 8px 28px rgba(192,132,252,0.4);
+    transition: transform 0.2s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .btn-tryagain img { width: 24px; height: 24px; }
+  .btn-tryagain:hover { transform: scale(1.08); }
+
+  /* ===== PAGE 3: GIFT FOR YOU ===== */
+  #page3 {
+    background: linear-gradient(160deg, #fff5f9 0%, #ffedf6 40%, #f5e6ff 100%);
+  }
+  .gift-title {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(1.7rem, 5vw, 2.8rem);
+    color: var(--deep); margin-bottom: 30px;
+    text-shadow: 2px 3px 0 rgba(255,107,157,0.15);
+    display: flex; align-items: center; gap: 16px;
+  }
+  .gift-title img { width: 42px; height: 42px; }
+  .gifts-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 20px; max-width: 520px; width: 100%;
+  }
+  .gift-card {
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(12px);
+    border-radius: 24px;
+    padding: 28px 20px; text-align: center;
+    box-shadow: 0 8px 32px rgba(255,107,157,0.12), 0 2px 8px rgba(0,0,0,0.03);
+    cursor: pointer;
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), box-shadow 0.35s;
+    border: 2px solid rgba(255,214,231,0.5);
+    position: relative; overflow: hidden;
+  }
+  .gift-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,214,231,0.4), rgba(212,168,255,0.15));
+    opacity: 0; transition: opacity 0.35s;
+  }
+  .gift-card:hover {
+    transform: translateY(-10px) scale(1.04);
+    box-shadow: 0 22px 44px rgba(255,107,157,0.22);
+  }
+  .gift-card:hover::before { opacity: 1; }
+  .gift-icon-wrap {
+    display: flex; justify-content: center; margin-bottom: 14px;
+  }
+  .gift-icon-wrap img {
+    width: 72px; height: 72px; object-fit: contain;
+    transition: transform 0.35s;
+  }
+  .gift-card:hover .gift-icon-wrap img { transform: scale(1.18) rotate(-6deg); }
+  .gift-label {
+    font-size: 0.95rem; font-weight: 700; color: var(--deep);
+    position: relative; z-index: 1;
+  }
+
+  /* ===== NAV ARROW (replaces old buttons) ===== */
+  .nav-arrow {
+    margin-top: 32px;
+    background: none; border: none;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.95rem; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    transition: transform 0.25s, opacity 0.25s;
+    opacity: 0.7;
+    padding: 10px 20px;
+  }
+  .nav-arrow:hover { transform: translateX(6px); opacity: 1; }
+  .nav-arrow.dark { color: var(--deep); }
+  .nav-arrow.light { color: rgba(255,255,255,0.85); }
+  .nav-arrow.pink { color: var(--rose); }
+  .nav-arrow svg { width: 18px; height: 18px; fill: currentColor; }
+
+  /* ===== PAGE 4: BIRTHDAY ===== */
+  #page4 {
+    background: linear-gradient(135deg, #1a0a2e 0%, #2d0a4e 50%, #1a1a4e 100%);
+    overflow: hidden;
+  }
+  .stars-bg { position: absolute; inset: 0; pointer-events: none; }
+  .star-dot {
+    position: absolute; border-radius: 50%;
+    background: white;
+    animation: star-twinkle var(--t, 3s) ease-in-out infinite alternate;
+  }
+  @keyframes star-twinkle { 0%{opacity:0.15;transform:scale(0.5)} 100%{opacity:1;transform:scale(1.6)} }
+
+  .bday-inner {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 34px; padding: 48px 54px;
+    text-align: center; max-width: 640px; width: 100%;
+    position: relative; z-index: 1;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+  }
+  .bday-cake-wrap {
+    animation: cake-bounce 3s ease-in-out infinite;
+    filter: drop-shadow(0 12px 30px rgba(255,107,157,0.35));
+  }
+  @keyframes cake-bounce { 0%,100%{transform:scale(1) rotate(-3deg)} 50%{transform:scale(1.08) rotate(3deg)} }
+  .bday-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2.2rem, 7vw, 4rem); font-weight: 700;
+    color: #ffd6e7; margin: 20px 0 10px;
+    text-shadow: 0 0 50px rgba(255,107,157,0.5), 0 0 100px rgba(255,107,157,0.2);
+  }
+  .bday-subtitle {
+    font-size: 1.1rem; color: rgba(255,220,240,0.8); font-weight: 500;
+    font-family: 'Caveat', cursive; font-size: 1.3rem;
+  }
+  .bday-year {
+    font-family: 'Pacifico', cursive;
+    font-size: 2.8rem; color: #f4c430; margin: 14px 0;
+    text-shadow: 0 0 24px rgba(244,196,48,0.4);
+    display: flex; align-items: center; justify-content: center; gap: 18px;
+  }
+  .bday-year img { width: 38px; height: 38px; }
+  .balloon-row {
+    display: flex; justify-content: center; gap: 20px;
+    margin-top: 22px;
+  }
+  .balloon-item {
+    animation: sway var(--t, 2s) ease-in-out infinite alternate;
+  }
+  .balloon-item img {
+    width: 46px; height: 46px; object-fit: contain;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+  }
+  @keyframes sway { 0%{transform:rotate(-10deg) translateY(0)} 100%{transform:rotate(10deg) translateY(-6px)} }
+
+  /* ===== PAGE 5: DEAR LOVE LETTER ===== */
+  #page5 {
+    background: #1c1430;
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(139,92,246,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(255,64,129,0.2) 0%, transparent 60%);
+  }
+  .letter-wrap {
+    background: #fffaf5;
+    border-radius: 6px;
+    box-shadow: 0 14px 56px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(0,0,0,0.03);
+    padding: 48px 52px; max-width: 600px; width: 100%;
+    position: relative; overflow: hidden;
+    transform: rotate(-0.8deg);
+  }
+  .letter-wrap::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px;
+    background: repeating-linear-gradient(90deg, #ff6b9d 0 20px, #c084fc 20px 40px, #ff6b9d 40px 60px);
+  }
+  .letter-lines {
+    position: absolute; inset: 48px 0 0;
+    background-image: repeating-linear-gradient(transparent, transparent 27px, #ede5f3 27px, #ede5f3 28px);
+    pointer-events: none; opacity: 0.4;
+  }
+  .letter-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    position: relative; z-index: 1; margin-bottom: 16px;
+  }
+  .letter-salutation {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2rem; color: var(--rose);
+  }
+  .letter-corner-img { width: 50px; height: 50px; opacity: 0.6; }
+  .letter-body {
+    font-size: 1rem; line-height: 2; color: #3d2060;
+    position: relative; z-index: 1;
+    font-weight: 500;
+  }
+  .letter-sign {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem; color: var(--rose);
+    margin-top: 24px; position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .letter-sign img { width: 30px; height: 30px; }
+  .letter-flower-bottom {
+    position: absolute; bottom: 12px; right: 16px;
+    width: 60px; height: 60px; opacity: 0.3;
+    transform: rotate(15deg);
+  }
+
+  /* ===== PAGE 6: AWARD ===== */
+  #page6 {
+    background: radial-gradient(ellipse at center, #eef0ff 0%, #d8ddff 100%);
+  }
+  .award-cert {
+    background: white;
+    border: 3px solid #c8b4f0;
+    border-radius: 22px;
+    padding: 48px 52px;
+    max-width: 580px; width: 100%;
+    text-align: center;
+    box-shadow: 0 14px 52px rgba(139,92,246,0.18), inset 0 0 0 8px rgba(196,168,255,0.1);
+    position: relative;
+  }
+  .award-ornament {
+    display: flex; justify-content: center; gap: 8px;
+    margin: 10px 0;
+  }
+  .award-ornament img { width: 16px; height: 16px; opacity: 0.5; }
+  .award-title {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.05rem; letter-spacing: 5px; text-transform: uppercase;
+    color: #7c3aed; font-weight: 700; margin-bottom: 6px;
+  }
+  .award-subtitle {
+    font-size: 0.82rem; color: #9ca3af; margin-bottom: 18px;
+    font-style: italic;
+  }
+  .award-name {
+    font-family: 'Sacramento', cursive;
+    font-size: 3.4rem; color: var(--deep); font-weight: 400;
+    margin: 16px 0;
+  }
+  .award-stars-row {
+    display: flex; justify-content: center; gap: 6px;
+  }
+  .award-stars-row img { width: 26px; height: 26px; }
+  .award-body {
+    font-size: 1rem; color: #4b3068; line-height: 1.8;
+    font-weight: 500; margin-top: 16px;
+  }
+  .award-medal-wrap {
+    margin: 20px 0;
+    display: flex; justify-content: center;
+  }
+  .award-medal-wrap img {
+    width: 90px; height: 90px;
+    filter: drop-shadow(0 6px 16px rgba(244,196,48,0.4));
+    animation: medal-shine 3s ease-in-out infinite;
+  }
+  @keyframes medal-shine {
+    0%, 100% { filter: drop-shadow(0 6px 16px rgba(244,196,48,0.4)) brightness(1); }
+    50% { filter: drop-shadow(0 6px 24px rgba(244,196,48,0.6)) brightness(1.1); }
+  }
+
+  /* ===== PAGE 7: LOVE COUPONS ===== */
+  #page7 {
+    background: linear-gradient(160deg, #fef9ff 0%, #fde8ff 50%, #f5e6ff 100%);
+  }
+  .coupons-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.8rem; color: var(--deep); margin-bottom: 8px;
+  }
+  .coupons-sub {
+    font-size: 0.95rem; color: #9b5de5; font-style: italic;
+    margin-bottom: 30px; font-weight: 500;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .coupons-sub img { width: 20px; height: 20px; }
+  .coupons-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 16px; max-width: 580px; width: 100%;
+  }
+  .coupon {
+    background: linear-gradient(135deg, #7c3aed, #9b5de5);
+    border-radius: 18px; padding: 22px 20px;
+    display: flex; align-items: center; gap: 16px;
+    box-shadow: 0 6px 24px rgba(124,58,237,0.28);
+    position: relative; overflow: hidden; cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s;
+  }
+  .coupon:nth-child(even) { background: linear-gradient(135deg, #9b5de5, #c084fc); }
+  .coupon:hover { transform: scale(1.06) translateY(-3px); box-shadow: 0 12px 32px rgba(124,58,237,0.4); }
+  .coupon::before {
+    content: ''; position: absolute;
+    left: -8px; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px; background: #fef9ff; border-radius: 50%;
+  }
+  .coupon::after {
+    content: ''; position: absolute;
+    right: -8px; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px; background: #fef9ff; border-radius: 50%;
+  }
+  .coupon-icon { flex-shrink: 0; }
+  .coupon-icon img { width: 40px; height: 40px; object-fit: contain; }
+  .coupon-text { font-size: 0.95rem; font-weight: 700; color: white; line-height: 1.3; }
+  .coupon-tag {
+    position: absolute; top: 6px; right: 14px;
+    font-size: 0.58rem; color: rgba(255,255,255,0.45);
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+
+  /* ===== PAGE 8: CLOSING ===== */
+  #page8 {
+    background: linear-gradient(160deg, #0f0720 0%, #1e0a38 50%, #200030 100%);
+    overflow: hidden;
+  }
+  .closing-stars { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .closing-star-dot {
+    position: absolute; border-radius: 50%; background: white;
+    animation: closing-twinkle var(--t, 3s) ease-in-out infinite var(--d, 0s) alternate;
+  }
+  @keyframes closing-twinkle { 0%{opacity:0.1;transform:scale(0.6)} 100%{opacity:0.9;transform:scale(1.4)} }
+  .closing-card {
+    background: rgba(255,255,255,0.06); backdrop-filter: blur(22px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 34px; padding: 52px 58px;
+    max-width: 640px; width: 100%; text-align: center;
+    position: relative; z-index: 1;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+  }
+  .closing-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2rem, 6vw, 3.4rem); font-weight: 700;
+    color: #ffd6e7; margin-bottom: 20px;
+    text-shadow: 0 0 50px rgba(255,107,157,0.5);
+  }
+  .closing-body {
+    font-size: 1.05rem; color: rgba(255,220,240,0.85);
+    line-height: 1.95; font-weight: 500;
+  }
+  .closing-img-wrap {
+    margin: 28px 0;
+    animation: float 3.5s ease-in-out infinite;
+    display: flex; justify-content: center;
+  }
+  .closing-img-wrap img {
+    width: 130px; height: 130px; object-fit: contain;
+    filter: drop-shadow(0 10px 24px rgba(255,107,157,0.4));
+  }
+  .closing-sign {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem; color: var(--pink);
+    margin-top: 22px;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+  }
+  .closing-sign img { width: 34px; height: 34px; }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 600px) {
+    .letter-wrap { padding: 32px 24px; transform: rotate(0); }
+    .award-cert { padding: 32px 24px; }
+    .coupons-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .coupon { padding: 16px 14px; }
+    .closing-card { padding: 32px 24px; }
+    .bday-inner { padding: 28px 24px; }
+    .page0-title { font-size: 2.2rem; }
+    .cute-img { width: 110px; height: 110px; }
+    .cute-img-lg { width: 140px; height: 140px; }
+    .cute-img-xl { width: 170px; height: 170px; }
+    .gifts-grid { max-width: 360px; gap: 14px; }
+    .gift-card { padding: 20px 14px; }
+    .gift-icon-wrap img { width: 56px; height: 56px; }
+    .btn-area { gap: 16px; }
+    .btn-yes { padding: 14px 36px; font-size: 1.15rem; }
+    .btn-no { padding: 14px 32px; font-size: 1.05rem; }
+  }
+
+  /* ===== COUNTDOWN TIMER OVERLAY ===== */
+  .countdown-overlay {
+    position: fixed; inset: 0; z-index: 10000;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #1a0a2e 0%, #2d1050 30%, #1e0a3e 60%, #150828 100%);
+    transition: opacity 1s ease, visibility 1s ease;
+    overflow: hidden;
+  }
+  .countdown-overlay.hidden {
+    opacity: 0; visibility: hidden; pointer-events: none;
+  }
+  .countdown-stars {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  }
+  .cd-star {
+    position: absolute; border-radius: 50%; background: white;
+    animation: cd-twinkle var(--t, 3s) ease-in-out infinite var(--d, 0s) alternate;
+  }
+  @keyframes cd-twinkle {
+    0% { opacity: 0.1; transform: scale(0.5); }
+    100% { opacity: 0.85; transform: scale(1.5); }
+  }
+
+  .cd-floating-heart {
+    position: absolute; pointer-events: none; z-index: 0;
+    animation: cd-heart-float linear infinite;
+    opacity: 0;
+  }
+  @keyframes cd-heart-float {
+    0% { opacity: 0; transform: translateY(100vh) scale(0.5) rotate(0deg); }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.3; }
+    100% { opacity: 0; transform: translateY(-10vh) scale(1.2) rotate(25deg); }
+  }
+
+  .cd-content {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center;
+    padding: 24px;
+  }
+
+  .cd-cake-wrap {
+    animation: cd-cake-bob 3s ease-in-out infinite;
+    margin-bottom: 20px;
+  }
+  .cd-cake-wrap svg { width: 100px; height: 100px; filter: drop-shadow(0 8px 24px rgba(255,107,157,0.4)); }
+  @keyframes cd-cake-bob {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-12px) rotate(3deg); }
+  }
+
+  .cd-label {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    color: rgba(255,220,240,0.7);
+    letter-spacing: 2px; margin-bottom: 6px;
+  }
+  .cd-name {
+    font-family: 'Sacramento', cursive;
+    font-size: clamp(3rem, 9vw, 5.5rem);
+    color: #ffd6e7;
+    text-shadow: 0 0 40px rgba(255,107,157,0.5), 0 0 80px rgba(255,107,157,0.2);
+    margin-bottom: 8px;
+    line-height: 1.1;
+  }
+  .cd-subtitle {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    color: rgba(255,200,230,0.6);
+    margin-bottom: 36px;
+    font-style: italic;
+  }
+
+  .cd-timer {
+    display: flex; gap: 16px;
+    margin-bottom: 32px;
+  }
+  .cd-unit {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 20px 16px;
+    min-width: 80px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .cd-num {
+    font-family: 'Quicksand', sans-serif;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    font-weight: 700;
+    color: #ffd6e7;
+    line-height: 1;
+    display: block;
+    text-shadow: 0 0 20px rgba(255,107,157,0.4);
+  }
+  .cd-lbl {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.65rem;
+    color: rgba(255,200,230,0.5);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 8px;
+    display: block;
+  }
+
+  .cd-colon {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 2.4rem; font-weight: 700;
+    color: rgba(255,214,231,0.4);
+    align-self: center;
+    padding-bottom: 18px;
+    animation: cd-colon-blink 1s ease-in-out infinite;
+  }
+  @keyframes cd-colon-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  .cd-footer-msg {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: rgba(255,200,230,0.45);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .cd-footer-msg svg {
+    width: 16px; height: 16px;
+    animation: cd-heart-pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes cd-heart-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+  }
+
+  .birthday-content {
+    display: none;
+  }
+  .birthday-content.revealed {
+    display: block;
+  }
+
+  @media (max-width: 600px) {
+    .cd-unit { min-width: 64px; padding: 16px 10px; border-radius: 16px; }
+    .cd-timer { gap: 8px; }
+    .cd-colon { font-size: 1.8rem; padding-bottom: 14px; }
+    .cd-cake-wrap svg { width: 75px; height: 75px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== COUNTDOWN TIMER OVERLAY ===== -->
+<div class="countdown-overlay" id="countdownOverlay">
+  <div class="countdown-stars" id="cdStars"></div>
+  <div id="cdHearts"></div>
+  <div class="cd-content">
+    <div class="cd-cake-wrap">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="12" y="30" width="40" height="26" rx="4" fill="#ff9eb5"/><rect x="8" y="26" width="48" height="8" rx="4" fill="#ffb7d5"/><rect x="12" y="44" width="40" height="4" fill="#ffd6e7" opacity="0.5"/><rect x="29" y="14" width="6" height="16" rx="2" fill="#ffe0c0"/><ellipse cx="32" cy="12" rx="5" ry="6" fill="#ffd54f"/><ellipse cx="32" cy="10" rx="3" ry="4" fill="#ffab40" opacity="0.7"/><circle cx="32" cy="7" r="2" fill="#ff6b9d"/><circle cx="20" cy="34" r="2" fill="#ffd6e7"/><circle cx="32" cy="36" r="2" fill="#ffd6e7"/><circle cx="44" cy="34" r="2" fill="#ffd6e7"/><path d="M8 30 Q18 22 32 26 Q46 22 56 30" fill="none" stroke="#ffd6e7" stroke-width="2"/></svg>
+    </div>
+    <div class="cd-label">Countdown to</div>
+    <div class="cd-name">Siddhi's Birthday</div>
+    <div class="cd-subtitle">29th April 2026</div>
+    <div class="cd-timer" id="cdTimer">
+      <div class="cd-unit"><span class="cd-num" id="cdDays">00</span><span class="cd-lbl">Days</span></div>
+      <div class="cd-colon">:</div>
+      <div class="cd-unit"><span class="cd-num" id="cdHours">00</span><span class="cd-lbl">Hours</span></div>
+      <div class="cd-colon">:</div>
+      <div class="cd-unit"><span class="cd-num" id="cdMins">00</span><span class="cd-lbl">Minutes</span></div>
+      <div class="cd-colon">:</div>
+      <div class="cd-unit"><span class="cd-num" id="cdSecs">00</span><span class="cd-lbl">Seconds</span></div>
+    </div>
+    <div class="cd-footer-msg">
+      <svg viewBox="0 0 24 24" fill="#ff6b9d"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      Something magical is on the way...
+      <svg viewBox="0 0 24 24" fill="#ff6b9d"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BIRTHDAY CONTENT (hidden until countdown ends) ===== -->
+<div class="birthday-content" id="birthdayContent">
+
+<!-- FLOATING PETALS BACKGROUND -->
+<div class="petals-bg" id="petalsBg"></div>
+
+<!-- CONFETTI CONTAINER -->
+<div class="confetti-container" id="confetti"></div>
+
+<!-- ===== PAGE 0: ENVELOPE ===== -->
+<div class="page active" id="page0">
+  <div class="envelope-scene">
+    <!-- floating cute decorations -->
+    <div class="float-decor" style="width:44px;top:-60px;left:-100px;animation-delay:0s">
+      <img src="https://i.pinimg.com/originals/a5/a3/ac/a5a3ac850c23940e0013237019a1c718.png" alt="">
+    </div>
+    <div class="float-decor" style="width:36px;top:-40px;right:-90px;animation-delay:1.5s">
+      <img src="https://i.pinimg.com/originals/20/14/41/201441ee4a9fa8e43ee2a52b7c093e76.png" alt="">
+    </div>
+    <div class="float-decor" style="width:40px;bottom:-50px;left:-80px;animation-delay:2.5s">
+      <img src="https://i.pinimg.com/originals/20/14/41/201441ee4a9fa8e43ee2a52b7c093e76.png" alt="">
+    </div>
+    <div class="float-decor" style="width:32px;bottom:-40px;right:-70px;animation-delay:0.8s">
+      <img src="https://i.pinimg.com/originals/a5/a3/ac/a5a3ac850c23940e0013237019a1c718.png" alt="">
+    </div>
+
+    <div class="envelope-wrap" onclick="goToPage(1)">
+      <div class="envelope">
+        <div class="env-flap"></div>
+        <div class="env-body"></div>
+        <div class="env-left"></div>
+        <div class="env-right"></div>
+        <div class="seal">
+          <img src="https://i.pinimg.com/originals/a5/a3/ac/a5a3ac850c23940e0013237019a1c718.png" alt="cherry blossom">
+        </div>
+      </div>
+    </div>
+    <p class="page0-title">Something special is waiting for you...</p>
+    <p class="click-hint">
+      <img src="https://cdn-icons-png.flaticon.com/128/7656/7656116.png" alt="">
+      tap to open
+      <img src="https://cdn-icons-png.flaticon.com/128/7656/7656116.png" alt="">
+    </p>
+  </div>
+</div>
+
+<!-- ===== PAGE 1: ACCEPT GIFT ===== -->
+<div class="page" id="page1">
+  <div class="page1-content">
+    <p class="page1-title">Please Accept<br>This Birthday Gift!</p>
+    <div class="cat-gif-container">
+      <img class="cute-img-xl" src="https://i.pinimg.com/originals/41/b8/4c/41b84c7b9a4c7c4d0c6c3f0fdd46e5b5.png" alt="cute cat">
+    </div>
+    <div class="btn-area">
+      <button class="btn-yes" onclick="handleYes()">
+        <img src="https://i.pinimg.com/originals/20/14/41/201441ee4a9fa8e43ee2a52b7c093e76.png" alt=""> YES
+      </button>
+      <button class="btn-no" id="btnNo" onclick="handleNo()">
+        <img src="https://cdn-icons-png.flaticon.com/128/753/753345.png" alt=""> NO
+      </button>
+    </div>
+  </div>
+  <!-- Floating hearts -->
+  <div class="hearts-float-img" style="width:30px;left:22%;top:52%;animation-delay:0s"><img src="https://i.pinimg.com/originals/20/14/41/201441ee4a9fa8e43ee2a52b7c093e76.png" alt=""></div>
+  <div class="hearts-float-img" style="width:24px;left:72%;top:58%;animation-delay:0.9s"><img src="https://i.pinimg.com/originals/20/14/41/201441ee4a9fa8e43ee2a52b7c093e76.png" alt=""></div>
+  <div class="hearts-float-img" style="width:20px;left:48%;top:68%;animation-delay:1.6s"><img src="https://i.pinimg.com/originals/20/14/41/201441ee4a9fa8e43ee2a52b7c093e76.png" alt=""></div>
+</div>
+
+<!-- ===== PAGE 2: WHY CLICK NO ===== -->
+<div class="page" id="page2">
+  <div class="page2-content">
+    <p class="page2-title">WHY DID YOU<br>CLICK NO?!</p>
+    <div class="cry-cat-container">
+      <img class="cute-img-xl" src="https://i.pinimg.com/originals/0a/6e/75/0a6e75b36fdc1f37147e1adb31401a01.png" alt="crying cat">
+    </div>
+    <p class="page2-msg">
+      You broke the cat's heart... and mine
+      <img src="https://cdn-icons-png.flaticon.com/128/13826/13826461.png" alt="broken heart">
+    </p>
+    <button class="btn-tryagain" onclick="goToPage(1)">
+      <img src="https://i.pinimg.com/originals/41/b8/4c/41b84c7b9a4c7c4d0c6c3f0fdd46e5b5.png" style="width:24px;height:24px" alt="">
+      Try Again
+    </button>
+  </div>
+</div>
+
+<!-- ===== PAGE 3: GIFT REVEAL ===== -->
+<div class="page" id="page3">
+  <p class="gift-title">
+    <img src="https://cdn-icons-png.flaticon.com/128/4213/4213958.png" alt="gift bow">
+    Gift For You!
+    <img src="https://cdn-icons-png.flaticon.com/128/4213/4213958.png" alt="gift bow">
+  </p>
+  <div class="gifts-grid">
+    <div class="gift-card" onclick="goToPage(4)">
+      <div class="gift-icon-wrap">
+        <img src="https://cdn-icons-png.flaticon.com/128/3656/3656951.png" alt="birthday cake">
+      </div>
+      <p class="gift-label">Birthday Celebration</p>
+    </div>
+    <div class="gift-card" onclick="goToPage(5)">
+      <div class="gift-icon-wrap">
+        <img src="https://cdn-icons-png.flaticon.com/128/3076/3076634.png" alt="love letter">
+      </div>
+      <p class="gift-label">A Letter For You</p>
+    </div>
+    <div class="gift-card" onclick="goToPage(6)">
+      <div class="gift-icon-wrap">
+        <img src="https://cdn-icons-png.flaticon.com/128/3112/3112946.png" alt="trophy">
+      </div>
+      <p class="gift-label">Best Girlfriend Award</p>
+    </div>
+    <div class="gift-card" onclick="goToPage(7)">
+      <div class="gift-icon-wrap">
+        <img src="https://cdn-icons-png.flaticon.com/128/2583/2583434.png" alt="ticket">
+      </div>
+      <p class="gift-label">Love Coupons</p>
+    </div>
+  </div>
+  <button class="nav-arrow pink" onclick="goToPage(4)">
+    Next Page <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+  </button>
+</div>
+
+<!-- ===== PAGE 4: BIRTHDAY ===== -->
+<div class="page" id="page4">
+  <div class="stars-bg" id="starsBg"></div>
+  <div class="bday-inner">
+    <div class="bday-cake-wrap">
+      <img class="cute-img-lg" src="https://cdn-icons-png.flaticon.com/256/3656/3656951.png" alt="birthday cake">
+    </div>
+    <div class="bday-title">Happy Birthday</div>
+    <div class="bday-subtitle">To the most beautiful girl in my world</div>
+    <div class="bday-year">
+      <img src="https://cdn-icons-png.flaticon.com/128/4213/4213732.png" alt="party popper">
+      2026
+      <img src="https://cdn-icons-png.flaticon.com/128/4213/4213732.png" alt="party popper">
+    </div>
+    <div class="balloon-row">
+      <div class="balloon-item" style="--t:1.8s"><img src="https://cdn-icons-png.flaticon.com/128/1039/1039494.png" alt="balloon"></div>
+      <div class="balloon-item" style="--t:2.2s;animation-delay:0.3s"><img src="https://cdn-icons-png.flaticon.com/128/1039/1039497.png" alt="balloon"></div>
+      <div class="balloon-item" style="--t:1.6s;animation-delay:0.6s"><img src="https://cdn-icons-png.flaticon.com/128/1039/1039494.png" alt="balloon"></div>
+      <div class="balloon-item" style="--t:2s;animation-delay:0.1s"><img src="https://cdn-icons-png.flaticon.com/128/1039/1039497.png" alt="balloon"></div>
+      <div class="balloon-item" style="--t:1.9s;animation-delay:0.4s"><img src="https://cdn-icons-png.flaticon.com/128/1039/1039494.png" alt="balloon"></div>
+    </div>
+    <button class="nav-arrow light" onclick="goToPage(5)">
+      Continue <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ===== PAGE 5: DEAR LOVE ===== -->
+<div class="page" id="page5">
+  <div class="letter-wrap">
+    <div class="letter-lines"></div>
+    <div class="letter-header">
+      <div class="letter-salutation">Dear Love,</div>
+      <img class="letter-corner-img" src="https://i.pinimg.com/originals/20/14/41/201441ee4a9fa8e43ee2a52b7c093e76.png" alt="">
+    </div>
+    <div class="letter-body">
+      On your special day, I'm reminded of how incredibly lucky I am to have you in my life. You bring so much light, laughter, and warmth into every single day.<br><br>
+      May this birthday bring you all the joy you've given me &mdash; calm mornings, brave hopes, and moments that feel like home. I wish you all the smiles that come easily, all the wins that match your effort, and all the kindness you give to others, returned to you in full.<br><br>
+      Here's to you &mdash; to your gentle heart, your beautiful mind, and your infectious smile. You deserve every happiness today and always.<br><br>
+      Happy Birthday, my love. I'm so grateful you were born.
+    </div>
+    <div class="letter-sign">
+      Forever yours
+      <img src="https://i.pinimg.com/originals/20/14/41/201441ee4a9fa8e43ee2a52b7c093e76.png" alt="heart">
+    </div>
+    <img class="letter-flower-bottom" src="https://i.pinimg.com/originals/a5/a3/ac/a5a3ac850c23940e0013237019a1c718.png" alt="">
+  </div>
+  <button class="nav-arrow light" onclick="goToPage(6)">
+    Next <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+  </button>
+</div>
+
+<!-- ===== PAGE 6: AWARD ===== -->
+<div class="page" id="page6">
+  <div class="award-cert">
+    <div class="award-ornament">
+      <img src="https://cdn-icons-png.flaticon.com/128/7656/7656116.png" alt="">
+      <img src="https://cdn-icons-png.flaticon.com/128/7656/7656116.png" alt="">
+      <img src="https://cdn-icons-png.flaticon.com/128/7656/7656116.png" alt="">
+    </div>
+    <div class="award-title">Best Girlfriend Award</div>
+    <div class="award-subtitle">this award is presented to:</div>
+    <div class="award-name">Siddhi</div>
+    <div class="award-stars-row">
+      <img src="https://cdn-icons-png.flaticon.com/128/1828/1828884.png" alt="star">
+      <img src="https://cdn-icons-png.flaticon.com/128/1828/1828884.png" alt="star">
+      <img src="https://cdn-icons-png.flaticon.com/128/1828/1828884.png" alt="star">
+      <img src="https://cdn-icons-png.flaticon.com/128/1828/1828884.png" alt="star">
+      <img src="https://cdn-icons-png.flaticon.com/128/1828/1828884.png" alt="star">
+    </div>
+    <p class="award-body">
+      You are the most precious person I have ever had. You make every ordinary day feel extraordinary. Thank you for being in my life, for listening to all my rants, for your endless patience, and for being there when I needed you most. You are my favourite everything.
+    </p>
+    <div class="award-medal-wrap">
+      <img src="https://cdn-icons-png.flaticon.com/256/2583/2583344.png" alt="gold medal">
+    </div>
+    <div class="award-ornament">
+      <img src="https://cdn-icons-png.flaticon.com/128/7656/7656116.png" alt="">
+      <img src="https://cdn-icons-png.flaticon.com/128/7656/7656116.png" alt="">
+      <img src="https://cdn-icons-png.flaticon.com/128/7656/7656116.png" alt="">
+    </div>
+  </div>
+  <button class="nav-arrow dark" onclick="goToPage(7)">
+    Next <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+  </button>
+</div>
+
+<!-- ===== PAGE 7: LOVE COUPONS ===== -->
+<div class="page" id="page7">
+  <div class="coupons-title">Love Coupons</div>
+  <div class="coupons-sub">
+    Use them freely... I never run out when it comes to you
+    <img src="https://i.pinimg.com/originals/20/14/41/201441ee4a9fa8e43ee2a52b7c093e76.png" alt="">
+  </div>
+  <div class="coupons-grid">
+    <div class="coupon">
+      <span class="coupon-icon"><img src="https://cdn-icons-png.flaticon.com/128/4697/4697068.png" alt=""></span>
+      <span class="coupon-text">Unlimited Hugs</span>
+      <span class="coupon-tag">SINGLE USE &times;&infin;</span>
+    </div>
+    <div class="coupon">
+      <span class="coupon-icon"><img src="https://cdn-icons-png.flaticon.com/128/7656/7656116.png" alt=""></span>
+      <span class="coupon-text">Your Wish, My Command</span>
+      <span class="coupon-tag">SINGLE USE &times;&infin;</span>
+    </div>
+    <div class="coupon">
+      <span class="coupon-icon"><img src="https://cdn-icons-png.flaticon.com/128/3468/3468284.png" alt=""></span>
+      <span class="coupon-text">Date Night (anytime)</span>
+      <span class="coupon-tag">SINGLE USE &times;&infin;</span>
+    </div>
+    <div class="coupon">
+      <span class="coupon-icon"><img src="https://cdn-icons-png.flaticon.com/128/833/833472.png" alt=""></span>
+      <span class="coupon-text">Unlimited Kisses</span>
+      <span class="coupon-tag">SINGLE USE &times;&infin;</span>
+    </div>
+    <div class="coupon">
+      <span class="coupon-icon"><img src="https://cdn-icons-png.flaticon.com/128/3480/3480823.png" alt=""></span>
+      <span class="coupon-text">Food of Your Choice</span>
+      <span class="coupon-tag">SINGLE USE &times;&infin;</span>
+    </div>
+    <div class="coupon">
+      <span class="coupon-icon"><img src="https://cdn-icons-png.flaticon.com/128/3163/3163478.png" alt=""></span>
+      <span class="coupon-text">Movie Marathon</span>
+      <span class="coupon-tag">SINGLE USE &times;&infin;</span>
+    </div>
+  </div>
+  <button class="nav-arrow dark" onclick="goToPage(8)">
+    Last Page <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+  </button>
+</div>
+
+<!-- ===== PAGE 8: CLOSING ===== -->
+<div class="page" id="page8">
+  <div class="closing-stars" id="closingStars"></div>
+  <div class="closing-card">
+    <div class="closing-title">Another Year,<br>Same Us</div>
+    <div class="closing-img-wrap">
+      <img src="https://cdn-icons-png.flaticon.com/256/4697/4697068.png" alt="love">
+    </div>
+    <div class="closing-body">
+      Every year with you is better than the last. I don't know what I did to deserve someone like you, but I'm going to spend every day being grateful for it.<br><br>
+      Let's keep growing together, laughing together, and making the most beautiful memories. Here's to us &mdash; now and always.
+    </div>
+    <div class="closing-sign">
+      Happy Birthday, my love
+      <img src="https://i.pinimg.com/originals/a5/a3/ac/a5a3ac850c23940e0013237019a1c718.png" alt="flower">
+    </div>
+  </div>
+</div>
+
+</div><!-- END birthday-content -->
+
+<script>
+  const TOTAL_PAGES = 9;
+  let currentPage = 0;
+  let noClickCount = 0;
+
+  // ===== COUNTDOWN TIMER SYSTEM =====
+  // Target: April 29, 2026, 00:00:00 IST (UTC+5:30)
+  const BIRTHDAY_IST = new Date('2026-04-29T00:00:00+05:30').getTime();
+
+  function getISTNow() {
+    // Get current time in IST regardless of user's timezone
+    const now = new Date();
+    // Convert to IST (UTC+5:30)
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const ist = utc + (5.5 * 3600000);
+    return ist;
+  }
+
+  function isBirthdayTime() {
+    // Check if current UTC time has passed the birthday moment
+    return Date.now() >= BIRTHDAY_IST;
+  }
+
+  function updateCountdown() {
+    const now = Date.now();
+    const diff = BIRTHDAY_IST - now;
+
+    if (diff <= 0) {
+      // Birthday time!
+      revealBirthday();
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+    document.getElementById('cdDays').textContent = String(days).padStart(2, '0');
+    document.getElementById('cdHours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('cdMins').textContent = String(mins).padStart(2, '0');
+    document.getElementById('cdSecs').textContent = String(secs).padStart(2, '0');
+  }
+
+  function revealBirthday() {
+    if (window._countdownInterval) clearInterval(window._countdownInterval);
+    const overlay = document.getElementById('countdownOverlay');
+    const content = document.getElementById('birthdayContent');
+
+    // Show birthday content first
+    content.classList.add('revealed');
+
+    // Fade out countdown overlay
+    overlay.classList.add('hidden');
+
+    // Remove overlay from DOM after transition
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      // Initialize petals and stars now
+      if (typeof createPetals === 'function') createPetals();
+      if (typeof createStars === 'function') createStars();
+    }, 1200);
+  }
+
+  // Create stars for countdown background
+  function initCountdownStars() {
+    const container = document.getElementById('cdStars');
+    if (!container) return;
+    for (let i = 0; i < 80; i++) {
+      const s = document.createElement('div');
+      s.className = 'cd-star';
+      s.style.left = Math.random() * 100 + '%';
+      s.style.top = Math.random() * 100 + '%';
+      s.style.setProperty('--t', (Math.random() * 4 + 2) + 's');
+      s.style.setProperty('--d', (Math.random() * 5) + 's');
+      const size = Math.random() * 2.5 + 0.8;
+      s.style.width = size + 'px';
+      s.style.height = size + 'px';
+      container.appendChild(s);
+    }
+  }
+
+  // Create floating hearts for countdown
+  function initCountdownHearts() {
+    const container = document.getElementById('cdHearts');
+    if (!container) return;
+    const heartSvg = '<svg viewBox="0 0 24 24" fill="%23ff6b9d" opacity="0.5"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+    for (let i = 0; i < 8; i++) {
+      const h = document.createElement('div');
+      h.className = 'cd-floating-heart';
+      const size = Math.random() * 20 + 12;
+      h.style.width = size + 'px';
+      h.style.height = size + 'px';
+      h.style.left = Math.random() * 100 + '%';
+      h.style.animationDuration = (Math.random() * 10 + 10) + 's';
+      h.style.animationDelay = (Math.random() * 10) + 's';
+      h.innerHTML = '<img src="data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff6b9d" opacity="0.5"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') + '" style="width:100%;height:100%">';
+      container.appendChild(h);
+    }
+  }
+
+  // Initialize countdown or reveal birthday
+  if (isBirthdayTime()) {
+    // Already birthday! Skip countdown entirely
+    document.getElementById('countdownOverlay').style.display = 'none';
+    document.getElementById('birthdayContent').classList.add('revealed');
+    // Defer petal/star creation to after SVG system loads
+    window._skipCountdown = true;
+  } else {
+    // Start countdown
+    initCountdownStars();
+    initCountdownHearts();
+    updateCountdown();
+    window._countdownInterval = setInterval(updateCountdown, 1000);
+  }
+</script>
+
+<script>
+  // ===== SELF-CONTAINED SVG IMAGE SYSTEM =====
+  const SVG_RAW = {
+    flower: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g transform="translate(50,48)"><ellipse cx="0" cy="-20" rx="14" ry="20" fill="#ffb7d5" transform="rotate(0)"/><ellipse cx="0" cy="-20" rx="14" ry="20" fill="#ffa0c8" transform="rotate(72)"/><ellipse cx="0" cy="-20" rx="14" ry="20" fill="#ffb7d5" transform="rotate(144)"/><ellipse cx="0" cy="-20" rx="14" ry="20" fill="#ffa0c8" transform="rotate(216)"/><ellipse cx="0" cy="-20" rx="14" ry="20" fill="#ffb7d5" transform="rotate(288)"/></g><circle cx="50" cy="48" r="10" fill="#ffe082"/><circle cx="47" cy="45" r="3" fill="#fff9c4" opacity="0.6"/></svg>',
+    heart: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#ff6b9d"/></svg>',
+    cute_cat: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220"><polygon points="55,85 40,28 82,68" fill="#ffd4a8"/><polygon points="145,85 160,28 118,68" fill="#ffd4a8"/><polygon points="60,82 48,38 80,68" fill="#ffb8d0"/><polygon points="140,82 152,38 120,68" fill="#ffb8d0"/><circle cx="100" cy="108" r="55" fill="#ffe0c0"/><circle cx="65" cy="118" r="13" fill="#ffb7d5" opacity="0.45"/><circle cx="135" cy="118" r="13" fill="#ffb7d5" opacity="0.45"/><circle cx="80" cy="102" r="7" fill="#3d1a4e"/><circle cx="120" cy="102" r="7" fill="#3d1a4e"/><circle cx="83" cy="99" r="2.8" fill="white"/><circle cx="123" cy="99" r="2.8" fill="white"/><ellipse cx="100" cy="115" rx="4.5" ry="3.2" fill="#ff9eb5"/><path d="M89 121 Q94.5 128 100 121" stroke="#3d1a4e" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M100 121 Q105.5 128 111 121" stroke="#3d1a4e" stroke-width="2" fill="none" stroke-linecap="round"/><ellipse cx="100" cy="185" rx="42" ry="32" fill="#ffe0c0"/><circle cx="72" cy="200" r="12" fill="#ffd4a8"/><circle cx="128" cy="200" r="12" fill="#ffd4a8"/><line x1="60" y1="108" x2="30" y2="100" stroke="#ffd4a8" stroke-width="2"/><line x1="60" y1="112" x2="28" y2="112" stroke="#ffd4a8" stroke-width="2"/><line x1="60" y1="116" x2="30" y2="124" stroke="#ffd4a8" stroke-width="2"/><line x1="140" y1="108" x2="170" y2="100" stroke="#ffd4a8" stroke-width="2"/><line x1="140" y1="112" x2="172" y2="112" stroke="#ffd4a8" stroke-width="2"/><line x1="140" y1="116" x2="170" y2="124" stroke="#ffd4a8" stroke-width="2"/></svg>',
+    cry_cat: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220"><polygon points="55,85 40,28 82,68" fill="#c8d8e8"/><polygon points="145,85 160,28 118,68" fill="#c8d8e8"/><polygon points="60,82 48,38 80,68" fill="#a8c0d8"/><polygon points="140,82 152,38 120,68" fill="#a8c0d8"/><circle cx="100" cy="108" r="55" fill="#d8e8f0"/><circle cx="80" cy="102" r="7" fill="#1a3a8f"/><circle cx="120" cy="102" r="7" fill="#1a3a8f"/><circle cx="83" cy="99" r="2.5" fill="white"/><circle cx="123" cy="99" r="2.5" fill="white"/><line x1="68" y1="88" x2="86" y2="94" stroke="#1a3a8f" stroke-width="2.5" stroke-linecap="round"/><line x1="132" y1="88" x2="114" y2="94" stroke="#1a3a8f" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="76" cy="118" rx="4" ry="10" fill="#88ccff" opacity="0.6"/><ellipse cx="124" cy="118" rx="4" ry="10" fill="#88ccff" opacity="0.6"/><ellipse cx="100" cy="112" rx="4" ry="3" fill="#b0c0d0"/><path d="M87 126 Q100 118 113 126" stroke="#1a3a8f" stroke-width="2.2" fill="none" stroke-linecap="round"/><ellipse cx="100" cy="185" rx="42" ry="32" fill="#d8e8f0"/><circle cx="72" cy="200" r="12" fill="#c8d8e8"/><circle cx="128" cy="200" r="12" fill="#c8d8e8"/></svg>',
+    sad_face: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#c4b5d0"/><circle cx="9" cy="10" r="1.5" fill="white"/><circle cx="15" cy="10" r="1.5" fill="white"/><path d="M8.5 16 Q12 13 15.5 16" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>',
+    broken_heart: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09L12 5.09V21.35z" fill="#9ca3af"/><path d="M12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3c-1.74 0-3.41.81-4.5 2.09L12 5.09V21.35z" fill="#6b7280"/><line x1="12" y1="5" x2="10" y2="10" stroke="white" stroke-width="0.8"/><line x1="10" y1="10" x2="14" y2="14" stroke="white" stroke-width="0.8"/><line x1="14" y1="14" x2="12" y2="21" stroke="white" stroke-width="0.8"/></svg>',
+    gift: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="10" width="18" height="11" rx="2" fill="#ff6b9d"/><rect x="3" y="10" width="18" height="4" rx="1" fill="#ff4081"/><rect x="10.5" y="10" width="3" height="11" fill="#ffd6e7"/><path d="M12 10C12 10 8 4 6 4c-1.5 0-2 1.5-0.5 3s5.5 3 6.5 3" fill="none" stroke="#ffd6e7" stroke-width="1.5"/><path d="M12 10C12 10 16 4 18 4c1.5 0 2 1.5 0.5 3s-5.5 3-6.5 3" fill="none" stroke="#ffd6e7" stroke-width="1.5"/></svg>',
+    cake: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="12" y="30" width="40" height="26" rx="4" fill="#ff9eb5"/><rect x="8" y="26" width="48" height="8" rx="4" fill="#ffb7d5"/><rect x="12" y="44" width="40" height="4" fill="#ffd6e7" opacity="0.5"/><rect x="29" y="14" width="6" height="16" rx="2" fill="#ffe0c0"/><ellipse cx="32" cy="12" rx="5" ry="6" fill="#ffd54f"/><ellipse cx="32" cy="10" rx="3" ry="4" fill="#ffab40" opacity="0.7"/><circle cx="32" cy="7" r="2" fill="#ff6b9d"/><circle cx="20" cy="34" r="2" fill="#ffd6e7"/><circle cx="32" cy="36" r="2" fill="#ffd6e7"/><circle cx="44" cy="34" r="2" fill="#ffd6e7"/><path d="M8 30 Q18 22 32 26 Q46 22 56 30" fill="none" stroke="#ffd6e7" stroke-width="2"/></svg>',
+    love_letter: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2" fill="#ffd6e7"/><path d="M2 8l10 6 10-6" fill="none" stroke="#ff6b9d" stroke-width="1.5"/><path d="M12 14l-1.2-1C7.6 10.5 6 9 6 7.5 6 6.1 7.1 5 8.5 5c.8 0 1.5.4 2 .9L12 5.9c.5-.5 1.2-.9 2-.9C15.4 5 16.5 6.1 16.5 7.5c0 1.5-1.6 3-4.8 5.5L12 14z" fill="#ff4081" transform="translate(0,2)"/></svg>',
+    trophy: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 4h14v2c0 3.3-2.7 6-6 6h-2C7.7 12 5 9.3 5 6V4z" fill="#ffd54f"/><path d="M5 6H3c0 2.8 1.8 5 4 5.5V11C5.3 10.2 4 8.3 4 6h1z" fill="#ffb300"/><path d="M19 6h2c0 2.8-1.8 5-4 5.5V11c1.7-.8 3-2.7 3-5h-1z" fill="#ffb300"/><rect x="10" y="12" width="4" height="4" fill="#ffb300"/><rect x="7" y="16" width="10" height="3" rx="1" fill="#ffd54f"/><circle cx="12" cy="7" r="2" fill="#fff9c4" opacity="0.5"/></svg>',
+    ticket: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 10V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v4c1.1 0 2 .9 2 2s-.9 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2z" fill="#c084fc"/><line x1="10" y1="6" x2="10" y2="18" stroke="white" stroke-width="1" stroke-dasharray="2,2" opacity="0.5"/><circle cx="15" cy="10" r="1" fill="white" opacity="0.5"/><circle cx="15" cy="14" r="1" fill="white" opacity="0.5"/></svg>',
+    party: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="2,22 6,2 10,22" fill="#ffd54f"/><polygon points="2,22 6,2 6,22" fill="#ffb300" opacity="0.5"/><circle cx="3" cy="8" r="1" fill="#ff6b9d"/><circle cx="8" cy="5" r="1" fill="#c084fc"/><circle cx="10" cy="10" r="0.8" fill="#ff4081"/><circle cx="14" cy="3" r="1.2" fill="#ff6b9d"/><circle cx="18" cy="6" r="1" fill="#ffd54f"/><circle cx="20" cy="2" r="0.8" fill="#c084fc"/><path d="M6 2 Q10 0 14 3" stroke="#ff6b9d" stroke-width="1" fill="none"/><line x1="14" y1="3" x2="16" y2="1" stroke="#c084fc" stroke-width="0.8"/><line x1="14" y1="3" x2="18" y2="4" stroke="#ff4081" stroke-width="0.8"/></svg>',
+    balloon_pink: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36"><ellipse cx="12" cy="12" rx="9" ry="11" fill="#ff6b9d"/><ellipse cx="10" cy="8" rx="3" ry="4" fill="#ff9eb5" opacity="0.5"/><polygon points="12,23 10,25 14,25" fill="#ff4081"/><line x1="12" y1="25" x2="12" y2="36" stroke="#d4a8ff" stroke-width="0.8"/></svg>',
+    balloon_purple: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36"><ellipse cx="12" cy="12" rx="9" ry="11" fill="#c084fc"/><ellipse cx="10" cy="8" rx="3" ry="4" fill="#d8b4fe" opacity="0.5"/><polygon points="12,23 10,25 14,25" fill="#9b5de5"/><line x1="12" y1="25" x2="12" y2="36" stroke="#ffd6e7" stroke-width="0.8"/></svg>',
+    sparkle: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2L13.5 9 20 8l-5.5 4L17 18l-5-3.5L7 18l2.5-6L4 8l6.5 1z" fill="#ffd54f"/><circle cx="12" cy="10" r="2" fill="#fff9c4" opacity="0.6"/></svg>',
+    star: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#ffd54f"/><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77V2z" fill="#ffb300" opacity="0.3"/></svg>',
+    medal: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 80"><polygon points="22,0 32,30 18,30" fill="#ff6b9d"/><polygon points="42,0 32,30 46,30" fill="#c084fc"/><circle cx="32" cy="48" r="22" fill="#ffd54f"/><circle cx="32" cy="48" r="17" fill="#ffb300"/><circle cx="32" cy="48" r="14" fill="#ffd54f"/><path d="M32 38l3 6.2 6.8 1-5 4.8 1.2 6.8L32 53.2l-6 3.6 1.2-6.8-5-4.8 6.8-1z" fill="#ffb300"/><circle cx="27" cy="42" r="2" fill="#fff9c4" opacity="0.4"/></svg>',
+    hug: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="22" cy="22" r="12" fill="#ffe0c0"/><circle cx="42" cy="22" r="12" fill="#ffe0c0"/><circle cx="19" cy="20" r="1.5" fill="#3d1a4e"/><circle cx="25" cy="20" r="1.5" fill="#3d1a4e"/><circle cx="39" cy="20" r="1.5" fill="#3d1a4e"/><circle cx="45" cy="20" r="1.5" fill="#3d1a4e"/><path d="M18 26 Q22 30 26 26" stroke="#3d1a4e" stroke-width="1" fill="none"/><path d="M38 26 Q42 30 46 26" stroke="#3d1a4e" stroke-width="1" fill="none"/><circle cx="15" cy="24" r="4" fill="#ffb7d5" opacity="0.4"/><circle cx="49" cy="24" r="4" fill="#ffb7d5" opacity="0.4"/><ellipse cx="32" cy="48" rx="20" ry="14" fill="#ff9eb5"/><path d="M32 38l-1.2-1C27.6 34.5 26 33 26 31.5 26 30.1 27.1 29 28.5 29c.8 0 1.5.4 2 .9l1.5 1.5 1.5-1.5c.5-.5 1.2-.9 2-.9 1.4 0 2.5 1.1 2.5 2.5 0 1.5-1.6 3-4.8 5.5L32 38z" fill="#ff4081"/></svg>',
+    calendar: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="3" fill="#c084fc"/><rect x="3" y="4" width="18" height="6" rx="3" fill="#9b5de5"/><line x1="7" y1="2" x2="7" y2="6" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="17" y1="2" x2="17" y2="6" stroke="white" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="14" r="1" fill="white" opacity="0.7"/><circle cx="12" cy="14" r="1" fill="white" opacity="0.7"/><circle cx="16" cy="14" r="1" fill="white" opacity="0.7"/><circle cx="8" cy="18" r="1" fill="white" opacity="0.7"/><circle cx="12" cy="18" r="1.2" fill="#ffd6e7"/></svg>',
+    kiss: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4C10 2 6 2 4 4s-2 6 2 10l6 6 6-6c4-4 4-8 2-10s-6-2-8 0z" fill="#ff4081"/><circle cx="9" cy="9" r="1.5" fill="#ff9eb5" opacity="0.6"/></svg>',
+    food: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><ellipse cx="12" cy="18" rx="10" ry="4" fill="#ffb300"/><ellipse cx="12" cy="16" rx="10" ry="4" fill="#ffd54f"/><ellipse cx="12" cy="14" rx="9" ry="3.5" fill="#ff6b9d"/><circle cx="8" cy="13" r="1.5" fill="#ff4081"/><circle cx="14" cy="12" r="1" fill="#4caf50"/><circle cx="11" cy="14" r="1.2" fill="#ffd54f"/><ellipse cx="12" cy="12" rx="9" ry="3.5" fill="#ffe0c0"/><path d="M5 12 Q12 8 19 12" fill="none" stroke="#ffd4a8" stroke-width="0.5"/></svg>',
+    movie: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" fill="#7c3aed"/><rect x="2" y="4" width="4" height="16" fill="#9b5de5"/><rect x="18" y="4" width="4" height="16" fill="#9b5de5"/><rect x="3" y="5" width="2" height="3" fill="#c084fc"/><rect x="3" y="9" width="2" height="3" fill="#c084fc"/><rect x="3" y="13" width="2" height="3" fill="#c084fc"/><rect x="19" y="5" width="2" height="3" fill="#c084fc"/><rect x="19" y="9" width="2" height="3" fill="#c084fc"/><rect x="19" y="13" width="2" height="3" fill="#c084fc"/><polygon points="10,8 10,16 16,12" fill="white" opacity="0.8"/></svg>'
+  };
+
+  // Convert to data URIs
+  const IMG = {};
+  for (const [key, svg] of Object.entries(SVG_RAW)) {
+    IMG[key] = 'data:image/svg+xml,' + encodeURIComponent(svg);
+  }
+
+  // Map external URLs to local SVGs (match by unique URL fragment)
+  const URL_MAP = [
+    ['a5/a3/ac/a5a3ac', IMG.flower],
+    ['20/14/41/201441', IMG.heart],
+    ['41/b8/4c/41b84c', IMG.cute_cat],
+    ['0a/6e/75/0a6e75', IMG.cry_cat],
+    ['753/753345', IMG.sad_face],
+    ['13826/13826461', IMG.broken_heart],
+    ['4213/4213958', IMG.gift],
+    ['3656/3656951', IMG.cake],
+    ['3076/3076634', IMG.love_letter],
+    ['3112/3112946', IMG.trophy],
+    ['2583/2583434', IMG.ticket],
+    ['4213/4213732', IMG.party],
+    ['1039/1039494', IMG.balloon_pink],
+    ['1039/1039497', IMG.balloon_purple],
+    ['7656/7656116', IMG.sparkle],
+    ['1828/1828884', IMG.star],
+    ['2583/2583344', IMG.medal],
+    ['4697/4697068', IMG.hug],
+    ['3468/3468284', IMG.calendar],
+    ['833/833472', IMG.kiss],
+    ['3480/3480823', IMG.food],
+    ['3163/3163478', IMG.movie]
+  ];
+
+  // Replace all external image sources with embedded SVGs
+  document.querySelectorAll('img').forEach(img => {
+    const src = img.getAttribute('src') || '';
+    for (const [frag, dataUri] of URL_MAP) {
+      if (src.includes(frag)) {
+        img.src = dataUri;
+        break;
+      }
+    }
+  });
+
+  // Helper to get data URI for petal
+  function getImageUri(key) { return IMG[key]; }
+
+  // ===== PETAL SYSTEM =====
+  function createPetals() {
+    const container = document.getElementById('petalsBg');
+    const petalSrc = IMG.flower;
+    for (let i = 0; i < 15; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      const size = Math.random() * 14 + 10;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.setProperty('--drift', (Math.random() - 0.5) * 120 + 'px');
+      p.style.animationDuration = (Math.random() * 14 + 10) + 's';
+      p.style.animationDelay = (Math.random() * 12) + 's';
+      p.innerHTML = '<img src="' + petalSrc + '" alt="">';
+      container.appendChild(p);
+    }
+  }
+  if (window._skipCountdown) createPetals();
+
+  // ===== STARFIELD for page 4 =====
+  function createStars() {
+    const container = document.getElementById('starsBg');
+    for (let i = 0; i < 100; i++) {
+      const s = document.createElement('div');
+      s.className = 'star-dot';
+      s.style.left = Math.random() * 100 + '%';
+      s.style.top = Math.random() * 100 + '%';
+      s.style.setProperty('--t', (Math.random() * 4 + 2) + 's');
+      s.style.animationDelay = (Math.random() * 5) + 's';
+      const size = Math.random() * 2.5 + 0.8;
+      s.style.width = size + 'px';
+      s.style.height = size + 'px';
+      container.appendChild(s);
+    }
+  }
+  if (window._skipCountdown) createStars();
+
+  // ===== PAGE NAVIGATION (no dots, clean transitions) =====
+  function goToPage(index) {
+    const current = document.getElementById('page' + currentPage);
+    const next = document.getElementById('page' + index);
+    if (!next) return;
+
+    current.classList.add('exit');
+    current.classList.remove('active');
+
+    setTimeout(() => {
+      current.classList.remove('exit');
+    }, 900);
+
+    next.classList.add('active');
+    currentPage = index;
+
+    if (index === 8) spawnClosingStars();
+    if (index === 3) spawnConfetti(60);
+  }
+
+  function handleYes() {
+    spawnConfetti(90);
+    setTimeout(() => goToPage(3), 600);
+  }
+
+  function handleNo() {
+    noClickCount++;
+    const btn = document.getElementById('btnNo');
+
+    if (noClickCount >= 3) {
+      goToPage(2);
+      noClickCount = 0;
+      // Reset button position
+      btn.style.position = '';
+      btn.style.left = '';
+      btn.style.top = '';
+      btn.style.transform = '';
+      return;
+    }
+
+    // Move NO button to a random spot AWAY from YES — never overlapping
+    const viewW = window.innerWidth;
+    const viewH = window.innerHeight;
+    
+    // Keep it within visible area but away from center where YES is
+    const minX = 40;
+    const maxX = viewW - 160;
+    const minY = 40;
+    const maxY = viewH - 80;
+    
+    let rx, ry;
+    // Ensure it goes to the edges, never near center
+    if (Math.random() > 0.5) {
+      rx = Math.random() > 0.5 ? (Math.random() * 120 + minX) : (maxX - Math.random() * 120);
+      ry = Math.random() * (maxY - minY) + minY;
+    } else {
+      rx = Math.random() * (maxX - minX) + minX;
+      ry = Math.random() > 0.5 ? (Math.random() * 80 + minY) : (maxY - Math.random() * 80);
+    }
+    
+    btn.style.position = 'fixed';
+    btn.style.left = rx + 'px';
+    btn.style.top = ry + 'px';
+    btn.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+    btn.style.zIndex = '100';
+  }
+
+  function spawnConfetti(count) {
+    const container = document.getElementById('confetti');
+    const colors = ['#ff6b9d','#c084fc','#ffd6e7','#f4c430','#ff4081','#a78bfa','#fbbf24','#f9a8d4','#818cf8'];
+    for (let i = 0; i < count; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random() * 100 + 'vw';
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const size = Math.random() * 10 + 7;
+
+      const shapeType = Math.random();
+      if (shapeType < 0.35) {
+        // Heart shape
+        piece.innerHTML = '<svg width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="'+color+'"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+      } else if (shapeType < 0.6) {
+        // Star shape
+        piece.innerHTML = '<svg width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="'+color+'"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+      } else {
+        // Classic confetti
+        piece.style.width = size + 'px';
+        piece.style.height = (size * 0.4) + 'px';
+        piece.style.background = color;
+        piece.style.borderRadius = '2px';
+      }
+      piece.style.setProperty('--drift', (Math.random()-0.5)*280 + 'px');
+      piece.style.animationDuration = (Math.random() * 2.5 + 2.5) + 's';
+      piece.style.animationDelay = (Math.random() * 1.5) + 's';
+      container.appendChild(piece);
+      setTimeout(() => piece.remove(), 5500);
+    }
+  }
+
+  function spawnClosingStars() {
+    const container = document.getElementById('closingStars');
+    container.innerHTML = '';
+    for (let i = 0; i < 50; i++) {
+      const s = document.createElement('div');
+      s.className = 'closing-star-dot';
+      s.style.left = Math.random() * 100 + '%';
+      s.style.top = Math.random() * 100 + '%';
+      s.style.setProperty('--t', (Math.random() * 3 + 2) + 's');
+      s.style.setProperty('--d', (Math.random() * 3) + 's');
+      const size = Math.random() * 3 + 1;
+      s.style.width = size + 'px';
+      s.style.height = size + 'px';
+      container.appendChild(s);
+    }
+  }
+
+  // ===== SPARKLE CURSOR TRAIL =====
+  let lastSparkle = 0;
+  document.addEventListener('mousemove', (e) => {
+    const now = Date.now();
+    if (now - lastSparkle < 100) return;
+    lastSparkle = now;
+
+    const spark = document.createElement('div');
+    spark.style.cssText = 'position:fixed;pointer-events:none;z-index:9999;width:10px;height:10px;left:'+(e.clientX-5)+'px;top:'+(e.clientY-5)+'px;animation:sparkle-out 0.5s ease-out forwards;';
+    spark.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="#ff6b9d" opacity="0.6"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+    document.body.appendChild(spark);
+    setTimeout(() => spark.remove(), 500);
+  });
+
+  // Add sparkle-out animation dynamically
+  const sparkStyle = document.createElement('style');
+  sparkStyle.textContent = '@keyframes sparkle-out{0%{opacity:0.7;transform:scale(1) rotate(0deg)}100%{opacity:0;transform:scale(0) rotate(120deg)}}';
+  document.head.appendChild(sparkStyle);
+
+  // ===== KEYBOARD NAVIGATION =====
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' && currentPage < 8 && currentPage !== 2) {
+      const nextMap = {0:1, 1:3, 3:4, 4:5, 5:6, 6:7, 7:8};
+      if (nextMap[currentPage] !== undefined) goToPage(nextMap[currentPage]);
+    }
+    if (e.key === 'ArrowLeft' && currentPage > 0) {
+      const prevMap = {1:0, 3:1, 4:3, 5:4, 6:5, 7:6, 8:7};
+      if (prevMap[currentPage] !== undefined) goToPage(prevMap[currentPage]);
+    }
+  });
+
+  // ===== TOUCH SWIPE NAVIGATION =====
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].screenX;
+    if (Math.abs(diff) > 60) {
+      if (diff > 0 && currentPage < 8 && currentPage !== 2) {
+        const nextMap = {0:1, 1:3, 3:4, 4:5, 5:6, 6:7, 7:8};
+        if (nextMap[currentPage] !== undefined) goToPage(nextMap[currentPage]);
+      } else if (diff < 0 && currentPage > 0) {
+        const prevMap = {1:0, 3:1, 4:3, 5:4, 6:5, 7:6, 8:7};
+        if (prevMap[currentPage] !== undefined) goToPage(prevMap[currentPage]);
+      }
+    }
+  });
+</script>
+</body>
+</html>
